@@ -1,13 +1,403 @@
-body {
+@import url("https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap");
+/* === Reset === */
+*,
+*::before,
+*::after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+body {
+  font-family: "Roboto", sans-serif;
+  min-height: 100vh;
+  scroll-behavior: smooth;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* === Theme Styles === */
+.dark-theme {
+  --color-bg: #282c35;
+  --color-bg-invert: #fff;
+  --color-font: #fff;
+  --color-font-invert: #282c35;
+}
+.light-theme {
+  --color-bg: #fff;
+  --color-bg-invert: #282c35;
+  --color-font: #282c35;
+  --color-font-invert: #fff;
+}
+
+/* === Main Styles === */
+
+/* scrollbars */
+/* Works on Chrome, Edge, and Safari */
+*::-webkit-scrollbar {
+  width: 12px;
+}
+
+*::-webkit-scrollbar-track {
+  background: var(--color-bg);
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: var(--color-bg-invert);
+  border-radius: 20px;
+  border: 3px solid var(--color-bg);
+}
+
+/* Utilities */
+.container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 1140px;
+}
+.container--nav {
+  align-items: center;
+}
+
+.mt-2 {
+  margin-top: 2rem;
+}
+.mt-4 {
+  margin-top: 4rem;
+}
+
+.btn {
+  cursor: pointer;
+  background-color: var(--color-bg);
+  color: var(--color-font);
+  border: 1px solid var(--color-font);
+  text-transform: uppercase;
+  padding: 0.25rem 0.5rem;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+.btn:hover {
+  filter: invert(5%);
+}
+
+.btn:disabled {
+  cursor: not-allowed;
+}
+
+.btn--toggle-theme {
+  height: 50px;
+  border: none;
+  background-color: transparent;
+  color: var(--color-font);
+  font-size: 2rem;
+  cursor: pointer;
+}
+
+/* Primary styles */
+
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: var(--color-bg);
+  color: var(--color-font);
+}
+
+nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  background-color: var(--color-bg);
+  border-bottom: 1px solid var(--color-bg-invert);
+  z-index: 2;
+}
+
+input[type="file"] {
+  display: none;
+}
+.custom-file-upload {
+  border: 1px solid var(--color-bg-invert);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 6px 12px;
+  border-radius: 5px;
+}
+
+svg {
+  margin: 0.5rem 0;
+}
+
+.step-descr {
+  width: 100%;
+  font-size: 1.25rem;
+  line-height: 2rem;
+  font-weight: bold;
+  border-bottom: 1px solid var(--color-bg-invert);
+  text-align: center;
+}
+.step-icon {
+  font-size: 125px;
+}
+
+.app__image-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+  padding: 0.5rem;
+  border: 1px solid var(--color-bg-invert);
+  border-radius: 5px;
+  min-height: 250px;
+}
+
+.app__image-preview {
+  pointer-events: none;
+  border-radius: 10px;
+  margin: 10px 0;
+  max-height: 250px;
+}
+
+.app__options {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  min-width: 300px;
+  padding: 0.5rem;
+  border: 1px solid var(--color-bg-invert);
+  border-radius: 5px;
+  min-height: 200px;
+}
+
+.form-control {
+  font-size: 1.2rem;
+  font-weight: bold;
+  line-height: 1.1;
+  display: grid;
+  grid-template-columns: 1em auto;
+  gap: 0.5em;
+  margin-bottom: 0.5rem;
+}
+
+.form-control + .form-control {
+  margin-top: 1em;
+}
+
+.form-control--disabled {
+  color: var(--form-control-disabled);
+  cursor: not-allowed;
+}
+
+input[type="checkbox"] {
+  -webkit-appearance: none;
+  appearance: none;
+  background-color: var(--form-background);
+  margin: 0;
+
+  font: inherit;
+  color: currentColor;
+  width: 1.15em;
+  height: 1.15em;
+  border: 0.15em solid currentColor;
+  border-radius: 0.15em;
+  transform: translateY(-0.075em);
+
+  display: grid;
+  place-content: center;
+}
+
+input[type="checkbox"]::before {
+  content: "";
+  width: 0.65em;
+  height: 0.65em;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+  transform: scale(0);
+  transform-origin: bottom left;
+  transition: 120ms transform ease-in-out;
+  background-color: var(--color-font);
+}
+
+input[type="checkbox"]:checked::before {
+  transform: scale(1);
+}
+
+input[type="checkbox"]:disabled {
+  --form-control-color: var(--form-control-disabled);
+
+  color: var(--form-control-disabled);
+  cursor: not-allowed;
+}
+
+.languages {
+  width: 100%;
+}
+
+.languages__descr {
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-align: center;
+}
+.languages__select {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+}
+
+.app__options-select {
+  padding: 0.5rem 0;
+  text-transform: uppercase;
+  background-color: var(--color-bg);
+  color: var(--color-font);
+  border: 1px solid var(--color-bg-invert);
+  border-radius: 5px;
+  margin: 0.25rem;
+  font-size: 0.9rem;
+}
+
+.app__convert {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  width: 300px;
+  padding: 0.5rem;
+  border: 1px solid var(--color-bg-invert);
+  border-radius: 5px;
+  min-height: 200px;
+}
+
+.progress-bar {
+  width: 100%;
+  height: 30px;
+  text-align: center;
+  font-weight: bold;
+  text-transform: capitalize;
+}
+
+.progress-bar__inner {
+  background-color: var(--color-bg-invert);
+  color: var(--color-font-invert);
+  height: 100%;
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+}
+
+.app__result {
+  position: relative;
+  padding: 1rem;
+  border: 1px solid var(--color-bg-invert);
+  border-radius: 5px;
+  width: 100%;
+}
+.app__result--copy {
+  visibility: hidden;
+  position: absolute;
+  top: 0.5rem;
+  right: 1rem;
+  font-size: 1.75rem;
+  cursor: pointer;
+}
+.container:hover .app__result--copy {
+  visibility: visible;
+}
+
+.app__result h2 {
+  text-align: center;
+}
+.app__result pre {
+  overflow-x: auto;
+}
+
+.text {
+  color: var(--color-font);
+  border-radius: 5px;
+}
+
+/* === Responsive === */
+
+/* show copy icon on touch screens: */
+@media (hover: none) and (pointer: coarse) {
+  .app__result--copy {
+    visibility: visible;
+  }
+}
+
+@media screen and (max-width: 1140px) {
+  .container {
+    width: calc(100% - 30px);
+    justify-content: center;
+  }
+  .container--nav {
+    justify-content: space-between;
+  }
+  .app__image-upload,
+  .app__options,
+  .app__convert {
+    width: 100%;
+    flex: 1;
+  }
+  .app__options {
+    flex: 2;
+    min-width: 390px;
+  }
+}
+@media screen and (max-width: 840px) {
+  .app__options-select {
+    margin: 0;
+  }
+}
+@media screen and (max-width: 800px) {
+  .container {
+    flex-direction: column;
+  }
+  .container--nav {
+    flex-direction: row;
+  }
+  .app__options-select {
+    margin: 0.5rem;
+  }
+}
+@media screen and (max-width: 440px) {
+  .container {
+    width: calc(100% - 10px);
+  }
+  .languages__select {
+    flex-direction: column;
+  }
+  h1 {
+    font-size: 1rem;
+  }
+  .app__options {
+    min-width: 100%;
+  }
 }
